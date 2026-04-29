@@ -1,0 +1,30 @@
+{
+  "scenario_id": 1,
+  "exp_tag": "full",
+  "algo_name": "LSTMDDPG",
+  "use_prediction": true,
+  "use_cross_step": true,
+  "use_dense_reward": true,
+  "dense_reward_kwargs": {
+    "barrier": 10.0,
+    "gamma": 3.0,
+    "kappa": 3.0,
+    "alpha": 1.0,
+    "beta": 0.0,
+    "clip_abs": 1.0
+  },
+  "online_finetune": false,
+  "delay_steps": 1,
+  "debug": false,
+  "seed": 2,
+  "train_steps_a": 102400,
+  "train_steps_b": 102400,
+  "train_steps_c": 102400,
+  "eval_steps": 2560,
+  "n_envs": 4,
+  "control_steps": 1000,
+  "penalty": 1000,
+  "pretrained_path": "./traffic_lstm_pretrained_3N_multiseed_all.pth",
+  "result_root": "./results/ablations",
+  "model_root": "./trained_models/ablations"
+}

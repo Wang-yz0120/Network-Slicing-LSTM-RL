@@ -1,0 +1,302 @@
+{
+  "full": {
+    "runs": 3,
+    "per_run": [
+      {
+        "sla_mean": 0.9031462371004279,
+        "sla_rate": 0.9031462371004279,
+        "avg_reward": 20.11593974513969,
+        "res_mean": 193.26446954442486,
+        "viol_total": 9056.25,
+        "viol_mean": 0.11397243896300024,
+        "viol_rate": 0.09685376289957211,
+        "reward_eval_mean": 22.52092057252303,
+        "viol_rate_eval": 0.057910156250000004,
+        "sla_rate_eval": 0.94208984375,
+        "res_eval_mean": 192.9255859375,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      },
+      {
+        "sla_mean": 0.5962276617165869,
+        "sla_rate": 0.5962276617165869,
+        "avg_reward": 7.000521505216552,
+        "res_mean": 188.6447866851246,
+        "viol_total": 40728.0,
+        "viol_mean": 0.5125597785049081,
+        "viol_rate": 0.403772338283413,
+        "reward_eval_mean": 24.103735492564738,
+        "viol_rate_eval": 0.00390625,
+        "sla_rate_eval": 0.99609375,
+        "res_eval_mean": 194.13027343750002,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      },
+      {
+        "sla_mean": 0.8987037503146238,
+        "sla_rate": 0.8987037503146238,
+        "avg_reward": 19.812422147608512,
+        "res_mean": 191.08612194815,
+        "viol_total": 9338.0,
+        "viol_mean": 0.11751824817518249,
+        "viol_rate": 0.10129624968537629,
+        "reward_eval_mean": 24.23582428013906,
+        "viol_rate_eval": 0.008398437500000001,
+        "sla_rate_eval": 0.9916015625000001,
+        "res_eval_mean": 194.57431640624998,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      }
+    ],
+    "reward_eval_mean": {
+      "mean": 23.620160115075606,
+      "std": 0.7791480564839685
+    },
+    "viol_rate_eval": {
+      "mean": 0.02340494791666667,
+      "std": 0.024467692831280478
+    },
+    "sla_rate_eval": {
+      "mean": 0.9765950520833334,
+      "std": 0.024467692831280474
+    },
+    "res_eval_mean": {
+      "mean": 193.8767252604167,
+      "std": 0.6965596639785474
+    }
+  },
+  "no_pred": {
+    "runs": 3,
+    "per_run": [
+      {
+        "sla_mean": 0.9267178454568337,
+        "sla_rate": 0.9267178454568337,
+        "avg_reward": 21.197258923958685,
+        "res_mean": 193.6279354392147,
+        "viol_total": 6480.0,
+        "viol_mean": 0.08155046564309086,
+        "viol_rate": 0.07328215454316638,
+        "reward_eval_mean": 22.979352773632854,
+        "viol_rate_eval": 0.0328125,
+        "sla_rate_eval": 0.9671874999999999,
+        "res_eval_mean": 194.14267578124998,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      },
+      {
+        "sla_mean": 0.8767146992197332,
+        "sla_rate": 0.8767146992197332,
+        "avg_reward": 18.60212833095551,
+        "res_mean": 189.64206519003272,
+        "viol_total": 12952.0,
+        "viol_mean": 0.16300025169896804,
+        "viol_rate": 0.1232853007802668,
+        "reward_eval_mean": 23.583818227564915,
+        "viol_rate_eval": 0.01435546875,
+        "sla_rate_eval": 0.98564453125,
+        "res_eval_mean": 194.52646484374998,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      },
+      {
+        "sla_mean": 0.9197143216712812,
+        "sla_rate": 0.9197143216712812,
+        "avg_reward": 20.817427932710515,
+        "res_mean": 194.70095960231563,
+        "viol_total": 7353.25,
+        "viol_mean": 0.09254027183488547,
+        "viol_rate": 0.08028567832871886,
+        "reward_eval_mean": 24.041556185111403,
+        "viol_rate_eval": 0.01064453125,
+        "sla_rate_eval": 0.9893554687499999,
+        "res_eval_mean": 197.46767578125,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      }
+    ],
+    "reward_eval_mean": {
+      "mean": 23.534909062103058,
+      "std": 0.43501961770997455
+    },
+    "viol_rate_eval": {
+      "mean": 0.01927083333333333,
+      "std": 0.009694511036855164
+    },
+    "sla_rate_eval": {
+      "mean": 0.9807291666666665,
+      "std": 0.009694511036855194
+    },
+    "res_eval_mean": {
+      "mean": 195.37893880208333,
+      "std": 1.4852474849279973
+    }
+  },
+  "no_cross": {
+    "runs": 3,
+    "per_run": [
+      {
+        "sla_mean": 0.9055971558016612,
+        "sla_rate": 0.9055971558016612,
+        "avg_reward": 19.805833173344247,
+        "res_mean": 191.76961678832117,
+        "viol_total": 8871.0,
+        "viol_mean": 0.11164107727158318,
+        "viol_rate": 0.09440284419833879,
+        "reward_eval_mean": 21.813606955204158,
+        "viol_rate_eval": 0.058886718750000004,
+        "sla_rate_eval": 0.9411132812499999,
+        "res_eval_mean": 191.4296875,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      },
+      {
+        "sla_mean": 0.8763182733450792,
+        "sla_rate": 0.8763182733450792,
+        "avg_reward": 18.560590171126854,
+        "res_mean": 191.40134973571605,
+        "viol_total": 12095.0,
+        "viol_mean": 0.15221495091870124,
+        "viol_rate": 0.12368172665492072,
+        "reward_eval_mean": 19.065401395130905,
+        "viol_rate_eval": 0.11416015624999999,
+        "sla_rate_eval": 0.8858398437499999,
+        "res_eval_mean": 184.99697265625,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      },
+      {
+        "sla_mean": 0.9001258494840172,
+        "sla_rate": 0.9001258494840172,
+        "avg_reward": 19.56680196878324,
+        "res_mean": 189.4007582431412,
+        "viol_total": 9828.75,
+        "viol_mean": 0.12369431160332242,
+        "viol_rate": 0.09987415051598288,
+        "reward_eval_mean": 21.817328951880338,
+        "viol_rate_eval": 0.065234375,
+        "sla_rate_eval": 0.934765625,
+        "res_eval_mean": 195.82373046875,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      }
+    ],
+    "reward_eval_mean": {
+      "mean": 20.898779100738466,
+      "std": 1.2963946986107149
+    },
+    "viol_rate_eval": {
+      "mean": 0.07942708333333333,
+      "std": 0.02469632834576702
+    },
+    "sla_rate_eval": {
+      "mean": 0.9205729166666666,
+      "std": 0.024696328345767054
+    },
+    "res_eval_mean": {
+      "mean": 190.75013020833333,
+      "std": 4.446048415325342
+    }
+  },
+  "raw_reward": {
+    "runs": 3,
+    "per_run": [
+      {
+        "sla_mean": 0.9060942612635288,
+        "sla_rate": 0.9060942612635288,
+        "avg_reward": -19.626856279889253,
+        "res_mean": 186.24550717342058,
+        "viol_total": 8702.5,
+        "viol_mean": 0.10952051346589481,
+        "viol_rate": 0.09390573873647118,
+        "reward_eval_mean": -24.248339843750006,
+        "viol_rate_eval": 0.09912109375,
+        "sla_rate_eval": 0.90087890625,
+        "res_eval_mean": 188.34707031250002,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      },
+      {
+        "sla_mean": 0.9005820538635791,
+        "sla_rate": 0.9005820538635791,
+        "avg_reward": -29.99295242889504,
+        "res_mean": 186.0117574880443,
+        "viol_total": 9390.25,
+        "viol_mean": 0.11817581172917191,
+        "viol_rate": 0.09941794613642084,
+        "reward_eval_mean": -36.150781249999994,
+        "viol_rate_eval": 0.11992187500000001,
+        "sla_rate_eval": 0.880078125,
+        "res_eval_mean": 183.18642578125002,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      },
+      {
+        "sla_mean": 0.9255568839667758,
+        "sla_rate": 0.9255568839667758,
+        "avg_reward": 4.705852001006796,
+        "res_mean": 193.7118770450541,
+        "viol_total": 6447.5,
+        "viol_mean": 0.08114145482003524,
+        "viol_rate": 0.07444311603322426,
+        "reward_eval_mean": 40.72890625,
+        "viol_rate_eval": 0.0451171875,
+        "sla_rate_eval": 0.9548828125,
+        "res_eval_mean": 194.9931640625,
+        "prio_weight_sum": NaN,
+        "prio_weight_mean": NaN,
+        "prio_mmtc_sum": NaN,
+        "prio_embb_cbr_sum": NaN,
+        "prio_embb_vbr_sum": NaN
+      }
+    ],
+    "reward_eval_mean": {
+      "mean": -6.556738281249999,
+      "std": 33.78723784615629
+    },
+    "viol_rate_eval": {
+      "mean": 0.08805338541666667,
+      "std": 0.03152571377787733
+    },
+    "sla_rate_eval": {
+      "mean": 0.9119466145833334,
+      "std": 0.03152571377787729
+    },
+    "res_eval_mean": {
+      "mean": 188.84222005208335,
+      "std": 4.832780232187989
+    }
+  }
+}

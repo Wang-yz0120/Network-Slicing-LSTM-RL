@@ -1,0 +1,11 @@
+start evaluation of scenario 1 run 0 algorithm RaRPPO
+[DEBUG] ReportWrapper init with n_prbs=150
+[DEBUG] ReportWrapper init: n_prbs=150, n_slices=5, n_variables=36
+ 100% ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1,024/1,024  [ 0:01:02 < 0:00:00 , 16 it/s ]
+ 100% ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1,024/1,024  [ 0:00:50 < 0:00:00 , 21 it/s ]
+ 100% ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1,024/512  [ 0:00:21 < 0:00:00 , 19 it/s ]
+trainning done!
+model saved
+evaluation done
+results saved by wrapper
+[FORCE SAVE] results saved via Monitor for run 0 | chain: Monitor -> ReportWrapper -> PriorityRewardWrapper -> SlaDenseRewardWrapper -> RiskPenaltyWrapper -> OneSidedInertia -> Gym21Compat -> RanSlice

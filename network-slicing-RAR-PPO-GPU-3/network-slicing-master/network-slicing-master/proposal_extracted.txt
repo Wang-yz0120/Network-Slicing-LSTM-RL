@@ -1,0 +1,724 @@
+附件1
+西北农林科技大学
+2024
+级博士（硕士）研究生学位论文
+开题报告
+基于深度强化学习的5G 网络切片
+资源动态分配方法研究
+Research on Dynamic Resource Allocation
+Methods for 5G Network Slicing Based on Deep
+Reinforcement Learning
+学
+院（系、所）
+信息工程学院
+一级学科/ 类别（领域）
+计算机技术
+研究生姓名及学号
+王一舟2024056191
+指导教师姓名
+孙红光
+开题论证小组组长姓名
+吴丹阳
+开题论证小组成员姓名
+景旭孙红光耿耀君
+潘玉亮
+研究生通过开题论证日期：
+年
+月
+日
+
+
+（一）选题依据
+1.1 选题背景与意义
+第五代移动通信技术(5G)及未来网络正在接纳广泛的新兴服务，包括自动驾
+驶、智能电网、大规模机器对机器通信、5G 流媒体以及随着用户数量爆炸式增
+长的远程手术服务（Gao et al. 2021），这些服务在带宽、延迟和可靠性方面都有
+不同的服务级别协议（Service Level Agreement，SLA）（Gao et al. 2020）。例
+如，5G 流媒体需要极高的吞吐量，而远程手术需要极高的可靠性和严格的延迟。
+为了满足适应不同服务的通信需求，国际电信联盟划分了三大主要业务场景：增
+强移动宽带（enhanced Mobile BroadBand ，eMBB ）、超可靠低时延通信
+（ultra-Reliable Low-Latency Communications，URLLC）和大规模物联网（massive
+Machine Type of Communication，mMTC）（Elayoubi et al. 2019）。eMBB 侧重
+于高带宽与高容量，在广域提供无缝覆盖与高移动性、高单位面积吞吐的服务；
+URLLC 侧重于超高可靠性与超低时延的确定性通信，面向工业控制、车联网、
+远程医疗等对时延、可用性极苛刻的场景；而mMTC 侧重于海量连接与低功耗
+低成本，强调广覆盖、超长电池寿命以及对上行少量数据的高效承载（Shafi et al.
+2017）。由于这三大业务场景各有侧重，传统的一刀切网络难以同时满足各种服
+务的要求（Cheng et al. 2023），这就需要一种高效且可持续的技术，通过单独的
+资源分配策略来适应不同类型的服务。
+作为解决上述挑战的关键使能技术，网络切片应运而生。网络切片技术的本
+质是在同一物理网络基础设施下创建、管理和维护一组虚拟化网络切片
+（Wijethilaka and Liyanage 2021），每个网络切片可以独立分配、管理其网络资
+源以满足不同的SLA 要求。网络切片的应用领域非常广泛，当在无线通信系统
+中应用网络切片时，相应的切片技术包括无线接入网（radio access network，RAN）
+切片、传输网切片和核心网切片。值得一提的是，RAN 切片在建立功能性网络
+切片中起着关键作用。它将移动设备连接到网络，根据用户请求分配无线资源，
+将虚拟化的资源单元映射到不同切片，并实时管理和报告物理链路状态（Chien et
+al. 2019）。
+所有这些功能都需要一种高效的资源分配方案，该方案能够实时跟踪用户设
+备的请求，连续地为每个切片分配可用的资源块（Resource Blocks，RB）、传输
+功率和带宽（Khan et al. 2020），以最大化资源利用效率并满足SLA 要求。然而，
+传统的专用资源分配方案无法满足这一要求（Hua et al. 2019），相反，强化学习
+
+（Reinforcement Learning，RL）方法凭借其在线自适应、面向长期回报的序贯决
+策特性，能够在在非平稳网络中通过“探索-利用”的方式自动学习资源分配策
+略（Nassar and Yilmaz 2021），可以高度契合网络切片中资源分配任务，故而大
+规模网络切片的相关工作使用强化学习方法来进行更深入的研究。综上，本课题
+将在现有研究的基础上，基于RL 等方法进行有关网络切片资源分配、资源调度
+等相关方面的深入研究。
+1.2 国内外研究现状
+1.2.1 基于网络切片技术的无线接入网资源分配研究现状
+随着5G 等网络的快速发展，RAN 切片问题在近年来已经成为业界的研究热
+点，围绕RAN 切片的相关研究已经在资源分配、虚拟网络功能部署与管理、切
+片的可靠性保障以及网络的安全性管理等方面取得了一定进展。目前针对RAN
+切片中的资源分配问题，已经提出了许多方法，这些方法大多关注一次性静态优
+化问题。具体来说，这些问题仅考虑当前网络状态，如当前用户请求，并且资源
+分配决策是通过求解静态优化问题，在不同时隙独立做出的。为解决RAN 切片
+的资源分配问题的各种方法可分为基于经典优化的方法和基于学习的方法。
+对于基于优化的方法，在（Masoudi et al. 2022）中，提出了一个以最小化云
+无线接入网能耗为目标的非凸优化问题。然后将该问题简化为一个凸二次规划问
+题，并通过传统的凸优化方法求解。在（Motalleb et al. 2022）中，作者提出了一
+种迭代算法，用于开放无线接入网系统中感知服务的基带资源分配和虚拟网络功
+能激活。该方法解决了前传容量限制和严格端到端延迟的挑战。在（Khan et al.
+2021）中，作者提出利用遗传算法来搜索RAN 切片中的最优带宽分配方案，提
+出了无线电资源切片优化策略，以满足关键任务和尽力而为的流量需求。然而，
+这些方法无法高效地适应动态网络环境，因为网络参数的显著变化通常使得有必
+要频繁地重新求解优化问题。此外，这些方法通常需要大量迭代才能收敛到局部
+最优解，因此不适合实时资源分配。
+对于基于学习的方法，在（Hua et al. 2019）中，提出了一种基于生成对抗网
+络的深度分布式Q 网络，用于无线接入网切片中的带宽和计算资源分配。在（Li
+et al. 2020）中，作者提出了一种增强的长短期记忆-行动者-评判家算法，用于无
+线接入网中感知需求的切片间资源管理，增强了用户移动跟踪和资源利用率。在
+（Gharehgoli et al. 2023）中，提出了一种基于循环确定性策略梯度的方法，以在
+考虑用户需求和信道状态信息不确定性的情况下，提高端到端资源分配中服务
+
+提供商的效用。在（Meng et al. 2019）中，提出了一种基于Q 学习的算法，通过
+最大化频谱效率和服务质量要求的加权和来优化无线接入网中每个切片的带宽
+分配。在（Dong et al. 2021）中，提出了一种图卷积神经网络辅助的多任务深度
+强化学习(deep reinforcement learning ，DRL)方法，用于处理基于软件定义网络
+的云无线接入网中的资源分配和路由问题。此外，有关层级RAN 资源分配的基
+于学习的方法也取得了一些进展。（Zangooei et al. 2023）中提出了一种新颖的
+受限强化学习算法，在上层为切片分配频谱资源，在下层为切片中的用户进行资
+源调度，从而在多时间尺度上大大提高了用户满意度。与此类似，（Alcaraz et al.
+2022）提出了一种基于模型的RL 方法，该方法建立在一种新颖的建模策略之上。
+其中，策略包括一个基于核的分类器和一个自我评估机制，通过模型不断地学习，
+从而高效地为切片层与用户层分配RAN 资源。
+1.2.2 基于深度强化学习的网络切片资源分配算法研究现状
+在早期的RAN 切片资源分配方案中，无线资源是固定分配的，这种静态资
+源分配可以避免RAN 切片之间的资源共享冲突，从而实现不同切片之间的性能
+隔离。但是，静态的分配方案会使得无线资源的利用率较低，并且造成较大的资
+源开销。因此，为了提高无线资源的利用率，RAN 切片急需一种灵活动态的资
+源分配方案。DRL 技术由于具有与环境不断交互学习、动态调整网络切片配置
+的能力，被多数研究应用来解决网络切片中的决策问题（Mei et al. 2021）。
+在切片资源分配方面，（Xi et al. 2019）通过考虑RAN 切片用户的实时资
+源请求，提出了一种基于DRL 的资源切片算法，该算法考虑不同切片带宽和能
+量的消耗，提高了虚拟网络提供商的长期效益和RAN 切片资源的利用率。（Hua
+et al. 2019）引入双层深度Q 网络构建了5G 网络中一种感知业务需求的资源分
+配算法，根据切片的实时业务请求量动态调整其资源配置，突破了资源固定的限
+制。（Zhang et al. 2022）提出5G-RAN 切片之间共享资源的方法，从全局资源
+池中划分部分可调节资源，用于切片的资源调整，以应对终端用户设备服务需求
+的变化。（Sun et al. 2019）同样采用资源预留策略，利用深度Q 网络算法根据
+切片的服务满意度和资源利用率反馈动态调整切片资源。（Liu et al. 2021）引入
+了一种基于受限深度Q 网络的资源分配框架，该框架使用各种强化学习算法进
+行训练，旨在满足5G-RAN 中视频、VoLTE 和uRLLC 切片的性能要求。（Hua et
+al. 2019）引入了一种基于双深度Q 网络的资源分配方法，以根据5G-RAN 上服
+务请求的动态情况满足SLA，同时最大化资源利用率和提供商收入。该方法使
+用由梯度下降算法训练的两个生成对抗网络，以最小化估计动作值分布与目标动
+作值分布之间的差异。
+
+在资源调度方面，（Huang and Kadoch 2020）提出了一种基于双深度Q 网络
+的调度方法，旨在在频谱资源不足时保证5G-RAN 中的低延迟要求并最大化数
+据传输下行链路时间。（Wang et al. 2019）引入了一种基于深度Q 网络的端到端
+NSL 资源调度方案，旨在最小化切片的SLA 违规率，在保证性能和服务可靠
+性的同时并最大化资源利用率。其中，双深度Q 网络智能体通过使用由四个卷
+积层组成的卷积神经网络根据感知到的需求来学习动态管理5G 网络切片的资
+源。（Zangooei et al. 2023）虽然使用了多智能体DRL 方法对切片间资源进行了
+分配，但对于切片内的资源调度问题使用了比例公平性的启发式方法进行求解。
+1.2.3 基于流量预测的网络切片资源分配算法研究现状
+随着网络流量的动态变化，传统的网络切片资源管理方法已难以满足需求，
+因此引入基于预测算法的智能化切片管理成为一种趋势。在这一领域，长短期记
+忆网络（Long Short-Term Memory，LSTM）等时间序列预测算法被广泛应用于
+流量预测和负载预测。通过分析历史流量数据，这些预测算法能够有效预测未来
+的网络负载或用户需求，从而帮助网络切片系统动态调整资源分配。这不仅提高
+了资源的利用率，还能应对流量高峰和突发事件的挑战。此外，预测算法还可用
+于切片容量规划和自适应调整，使网络切片管理更具灵活性和智能化。因此，基
+于预测算法的网络切片研究在提升网络效率和服务质量方面发挥了重要作用。
+为了为未来的服务请求预留资源，（Sciancalepore et al. 2019）的研究中，作
+者使用霍尔特-温特斯(Holt - Winters)理论，基于对切片资源的未来流量预测，
+研究了网络切片准入控制和流量调度问题。（Li et al. 2020）提出了一种增强的
+长短期记忆-行动者-评判家(LSTM - A2C)算法来进行无线接入网中感知需求的
+切片间资源管理，该方法使用LSTM 预测用户需求波动来间接反映用户移动性变
+化，从而增强了用户移动跟踪和资源利用率。（Subramanya et al. 2020）预测了
+满足不确定流量需求所需的虚拟网络功能实例数量，并在此基础上求解整数线性
+规划问题以实现虚拟网络功能迁移，从而最小化端到端延迟。（Khan et al. 2022）
+提出了一种基于机器学习的机制来预测工作负载和能耗，以辅助资源管理策略。
+（Kumar et al. 2021）提出了一种自主工作负载预测技术，该技术通过计算先前
+预测的偏差来获得预测误差变化，并将其应用于未来的预测以提高预测精度。
+（Luo et al. 2018）提出了一种基于LSTM 的实时信道状态信息预测解决方案，
+用于在5G 网络中利用历史数据预测未来的CSI。
+
+1.2.4 文献评价
+从上述国内外有关网络切片的研究现状可以看出，针对RAN 切片问题，目前
+大多数研究聚焦于RAN 切片中的资源分配问题，且采用优化与DRL 方法相结合的
+方式求解问题，并引入预测算法加以辅助。这些研究在为我们未来工作提供参考
+的同时，也存在着以下几点问题：
+1. 虽然目前存在一些研究使用预测算法对RAN 切片资源分配加以辅助，但
+在资源紧张、流量复杂多变的场景下仍然缺乏保障切片SLA 满意度的相关研究，
+难以在面对高突发流量时保持网络性能的稳定。
+2. 由于切片的动态创建、撤销会对DRL 方法状态空间的维度产生显著影响，
+已有研究大多假设切片数量固定且不同种类切片遵循固定比例，在这种假设下的
+网络场景无法较好地反映真实网络特性。
+3. 上述大量RAN 切片工作只聚焦于切片间资源分配问题，对于切片内的用
+户资源调度问题多使用例如轮询法或比例公平性方法等启发式方法，这些方法虽
+然可以在严格的时间限制内做出调度决策，但不够灵活，无法高效应对突如其来
+的流量需求。有些研究虽然同时考虑了切片间资源分配问题与切片内资源调度问
+题，但在进行切片内资源分配时采用了基于优化或多智能体的方法，这些方法在
+大规模用户的场景下开销很高，且难以满足时延要求。
+（二）研究内容
+无线网络在流量高峰期常呈现突发性强、业务类型多样、时域分布不均等特
+征，导致基站侧RAN 资源难以同时满足多切片SLA。因此，本课题将基于DRL
+方法与流量预测算法，实现RAN 切片的资源分配以及切片中的用户的资源调度，
+从而最大限度地满足多切片的SLA。具体而言，研究内容分为三部分（如图1
+所示）：
+首先，在较小的时间尺度内，假定切片数量固定不变，面对资源紧张、流量
+高突发场景，构建LSTM 与DRL 算法相结合的预测驱动的RAN 切片间资源分
+配方案：LSTM 基于历史负载预测未来短期流量与波动不确定性，DRL 算法在
+考虑SLA 违约风险与资源成本的情况下，不断优化切片间资源分配，实现对突
+发峰值的前视性缓解，并在尽可能使用较少资源的情况下满足切片的资源需求。
+其次，针对切片数量可变的网络场景，构建基于DRL 算法的RAN 切片间资
+源分配方案：采用DeepSets 置换不变编码来表征维度可变的状态集，然后将其
+作为PPO 的输入，在保障切片SLA 满意度与控制资源成本的同时，实现对RAN
+
+切片间资源分配的持续优化。
+图1 研究内容
+最后，在完成RAN 切片间分配后，设计在切片内资源调度机制：使用DRL
+算法与DeepSets 架构，结合时效性约束，在严格的时间限制内高效完成用户的
+资源调度。
+根据以上三点研究内容，本题将实现一个从不同时间粒度，由切片间到切片
+内的层级RAN 切片动态资源分配系统。
+2.1 基于流量预测的固定切片无线接入网资源分配方法研究
+目前RAN 切片资源分配的相关研究虽然引入了流量预测算法来考虑流量的
+波动性，但是面对资源紧张与流量高突发的场景，仍然容易产生切片SLA 违约
+与资源成本过高问题。为此，本课题的提出了一种基于流量预测切片间资源分配
+方案：由LSTM 基于历史到达流量预测未来流量需求，从而在当下进行资源分
+配决策时考虑为未来预留一部分资源，以避免未来切片SLA 违规。预测完成后
+预测结果与实时网络状态共同构成状态空间，作为DRL 算法的输入。在DRL 算
+法中，根据SLA 违规约束以及资源成本约束设计特定奖励函数，指导DRL 智能
+体与环境交互、学习，从而逐渐实现在资源紧张、流量突发场景下的长期目标最
+优化。
+2.2 可变切片场景下的无线接入网切片资源分配方法研究
+由于状态空间与动作空间与切片数量成正比，目前基于DRL 方法的RAN 切
+片资源分配研究基本假设在较小时间尺度下，切片数量与比例固定不变，以避免
+
+切片数量过大造成的维度灾难与性能负面影响。但是，这一假设无法适应无线网
+络的多变性、灵活性。针对这一问题，本课题将提出一种在可变数量切片场景下
+的RAN 切片资源分配方法。首先为了解决状态、动作空间维度的变化，我们采
+用Deep Sets 置换不变编码来表征维度可变的状态集：其中共享编码器提取切片
+局部特征，池化获得全局上下文，二者拼接后作为输入反馈给PPO 算法，PPO
+算法再结合考虑了SLA 违规风险、资源成本的奖励函数指导智能体的训练。相
+较于采用多智能体强化学习以解决可变状态维度问题的方法，该方法理论上更加
+轻量化，能够高效解决RAN 切片资源分配问题。
+2.3 基于深度强化学习的切片内用户调度方法研究
+现有用户调度研究多依赖启发式方法、静态优化方法或多智能体强化学习方
+法，其中启发式方法与优化方法难以在时变信道与突发流量下同时兼顾吞吐量、
+可靠性以及传输时延等多优化目标，而多智能体强化学习方法在面对大规模用户
+时开销过高，推理压力过大。针对这一问题，本课题将采用Deep Sets 与单智能
+体DRL 方法相结合的方式解决大规模用户推理需求过高的问题，同时设计考虑
+了吞吐量、用户满意度等多个指标的奖励函数指导单智能体的训练学习，从而高
+效完成用户资源调度。
+（三）技术路线
+图2 技术路线图
+本课题的目标是研究基于深度强化学习的开放无线接入网络资源分配与调
+
+度策略，明确不同研究内容的系统模型、优化目标，针对不同研究内容进行问题
+建模并将其转换为马尔可夫决策过程，然后选取合适的深度强化学习算法进行仿
+真验证。研究方案的技术路线示意图如图2 所示。
+3.1 基于流量预测的固定切片无线接入网资源分配技术路线
+1）系统模型
+我们考虑一个典型的蜂窝网络系统，该系统由一个基站以及若干用户设备组
+成，基站为属于K 个网络切片的多个用户设备提供网络接入，在一个六边形的
+小区内进行下行链路传输，图3 展示了K=3 时的系统示意图。基站与用户设备
+之间的无线接口称为帧，并且每个帧被划分为时间域与频率域：在时间维度上，
+帧被划分为传输时间间隔，即子帧；在频域上，带宽被划分为子载波。
+图3 系统示意图
+5G-RAN 的物理层允许不同传输时长和子载波间隔组合，即不同的时频资源
+配置方式。时频资源配置的选择取决于部署的频段和切片所需的传输服务能力。
+在我们的假设中，时间单位间隔为1 毫秒，子载波间隔为15MHz，使用不同时
+频资源配置的网络切片可以在同一无线帧中共存，每个网络切片被分配无线接口
+时频资源的一个子集，该子集的最小分配单位被称为物理资源块（physical
+resource block，PRB），由1 个时间单位间隔与12 个子载波间隔组成。系统会
+在每个帧的观测阶段中观测切片的状态，然后在决策阶段中根据其需求与服务特
+性为其分配在这一帧中该切片对若干PRB 的独占使用权，以满足其SLA。
+2）问题定义
+
+设�表示在射频接口中共存的�个活跃网络切片的集合，设�表示要在这些
+切片之间分配的PRB 总数。在每个阶段�= 1, 2, . . . ，控制代理接收在阶段�−1
+和�之间收集的每个切片的观察结果，用��−1
+(�) 表示，针对每个网络切片�∈�。
+在阶段�的�个切片观察结果的组合，用��= ��
+(1), . . . , ��
+(�)表示，就是系统观察结
+果。其中，��
+(�) 是一个向量，包含表1 中定义的变量的样本，这些变量是随机变
+量，它们是通过在阶段�−1 和�之间经过的传输时间间隔内聚合或平均多个随
+机过程而获得的。
+变量
+单位
+GBR 到达流量
+bit/s
+GBR 已交付流量
+bit/s
+GBR 平均占用资源
+PRBS/子帧
+GBR 用户平均队列长度
+bits/子帧
+GBR 用户平均SINR
+dB/子帧
+非GBR 到达流量
+bit/s
+非GBR 已交付流量
+bit/s
+非GRB 平均占用资源
+PRBS/子帧
+非GRB 用户平均队列长度
+bits/子帧
+非GRB 用户平均SINR
+dB/子帧
+mMTC 切片中用户数量数量
+用户设备
+用户设备剩余重复传输次数
+重复次数/每用户设备
+用户设备平均延迟
+秒/用户设备
+表1 状态变量
+这些过程包含用户设备进入和离开小区、每个用户设备生成的保证比特率
+（Guaranteed Bit Rate，GBR）流量或非保证比特率（non-GBR）流量、每个用户
+缓冲的数据或每个信道上的信干噪比（Signal to Interference plus Noise Ratio，
+SINR）测量。因此，我们将使用大写符号��
+(�)来表示切片观察结果，该结果为随
+机变量，使用小写符号��
+(�)来表示随机变量��
+(�)的特定样本。
+为了应对突发到达的随机流量，更好地考虑未来情况为未来做资源预留，我
+们考虑引入LSTM 方法对未来流量进行预测。在LSTM 中，输入{ℎ�−9, . . . , ℎ�},
+其中ℎ�={��,�
+���, ��,�
+���−���, ��,�
+����}表示�阶段的部分观测状态,��,�
+���, ��,�
+���−���, ��,�
+����
+分别表示�阶段切片�的到达的GBR 流量、non-GBR 流量以及mMTC 切片中的用
+户设备数量，根据这些输入，LSTM 可预测出下一阶段对应的部分观测状态ℎ�
+’ 。
+在决策阶段，系统的控制智能体选择要为每个切片�∈�分配PRB 数量��
+�，
+
+所有分配的集合��= (��
+1, . . . ��
+�)表示决策阶段n 的控制动作。由于智能体的决策
+由随机变量决定��
+(�)，对于切片�∈�而言，切片分配的PRB 数量也是随机变量，
+��
+(�)，而��
+(�)指的是一个特定值。
+对于每个切片�，我们定义一个指示函数�(�)，该函数逐阶段向系统的控制智
+能体报告SLA 的履行情况：如果切片�的SLA 在决策阶段�与�+ 1 之间被违反，
+则�(�)(��
+(�), ��
+(�)) = 1，否则�(�)(��
+(�), ��
+(�)) = 0，其中�(�)综合了SLA 中定义的所有关键
+绩效指标，例如在eMBB 切片中，如果系统无法满足GRB 的服务质量需求或
+non-GRB 的服务质量需求，则�(�)将返回1，只有在观察阶段内所有的服务质量需
+求都得到满足时，它才会返回0。
+根据上述定义，为控制智能体找到有效策略的问题可以公式化为一个约束马尔可
+夫决策过程，该决策过程的目标是找到一个策略�∈�，该策略在每个切片的SLA
+违反水平保持在期望界限�以下的同时，最小化分配资源的平均量：
+min
+�∈��→∞
+1
+���
+�=1
+�
+�=1
+���
+�
+σ
+σ
+(1)
+s. t. lim
+�→∞
+1
+���
+�=1
+�
+��
+෍
+��
+�, ��
+�
+≤�, �∈�
+3）基于强化学习的问题构建
+状态空间：
+在阶段�中，控制智能体观测到的系统状态��= ��
+(1), . . . , ��
+(�)与LSTM 预测的
+下一阶段的部分状态ℎ�
+’ 的集合{��, ℎ�
+’ }为智能体的状态空间。
+动作空间：
+由于我们考虑的场景流量波动较大，需要为后续动作预留一部分资源以供资
+源调整，故在为所有切片分配PRB 的基础上，我们需要定义一个为未来预留PRB
+资源的变量��
+���，��
+���= �−
+�
+���
+�
+σ
+。集合{��= (��
+1, . . . ���),��
+���}构成智能体的动
+作空间。
+奖励函数：
+�=
+−�−�⋅�neg , 存在切片SLA 违规
+1 + �⋅�pos −�⋅�������, 所有切片SLA 都达标
+（2）
+奖励函数应在满足约束条件SLA 违规期望小于�的情况下最小化资源使用量，
+
+故我们设计出如（2）的奖励函数，其中�、�、�、�为基础常数奖励或权重，σ���
+、σ���为违约的切片数量、SLA 满足的切片数量，�������为阶段�的PRB 分配
+总量。
+本节拟采用PPO 算法根据上述状态空间与奖励函数对动作空间进行求解，并
+通过仿真验证该策略的效果。
+3.2 可变切片场景下的无线接入网切片资源分配技术路线
+1）系统模型
+该系统模型与3.1 中的系统场景类似，但区别在于本节系统的切片数量�不
+再为定值，而是会随着阶段�而改变，即��，即本系统允许切片再其生命周期内
+无缝加入或离开网络。
+2）问题定义
+为了解决切片数量改变带来的状态动作空间维度改变问题，本节将在3.1 的
+基础上引入DeepSets 方法：首先使用共享编码器��，将每个切片状态编码为��
+(�) =
+��(��
+(�)) ，然后根据置换不变聚合得到全局上下文��= �{��
+(�)}�=1
+�
+=
+������
+1 , . . . , ��
+�
+，其中�{��
+�}�=1
+�
+对集合大小与顺序不敏感。最后将全局上下
+文与切片特征编码组合得到带全局上下文的切片表征�෤�
+�=[��
+(�),��]，该表征将用于
+后续动作的输出。
+3.2 的优化目标与3.1 类似，即找到一个策略�∈�，该策略在每个切片的SLA
+违反水平保持在期望界限�以下的同时，最小化分配资源的平均量：
+min
+�∈��→∞
+1
+���
+�=1
+�
+�=1
+�
+��
+�
+෍
+෍
+(3)
+s. t. lim
+�→∞
+1
+���
+�=1
+�
+��
+෍
+�෤�
+�, ��
+�
+≤�, �∈�
+3) 基于强化学习的问题构建
+状态空间：
+状态空间即经过DeepSets 输出的带全局上下文的切片表征�෤�
+�=[��
+(�),��]。
+动作空间：
+与3.1 中定义的动作类似，包含各切片分配的PRB 数量以及系统预留的PRB
+数量，{��= (��
+1, . . . ��
+�),��
+���}。
+由于优化目标基本一致，故奖励函数也采用式（2）所设计的奖励函数进行
+问题的求解。本节拟采用PPO 算法根据上述状态空间与奖励函数对动作空间进
+行求解，并通过仿真验证该策略的效果。
+
+3.3 基于深度强化学习的切片内用户调度技术路线
+1）系统模型
+本节系统模型是在3.1 的系统下构建的，在系统为所有切片分配了切片间资
+源后，继续进行本节对切片内用户资源调度的研究工作。
+2）问题定义
+假设切片�∈�在阶段n 中已经被分配了��
+(�)的PRB 资源，则本节的研究问题
+就是在阶段n 内，为切片�的用户集合��
+(�) = {��
+�,1, . . . , ��
+�,��
+(�)
+}中的每个用户分配总
+量为��
+(�)的PRB 资源，即用户资源的调度问题，设定��
+(�)表示阶段n 中切片�内的
+用户总数。
+3）基于强化学习的问题构建
+状态空间：
+��
+(�) = {��
+�,1, . . . , ��
+�,��
+(�)
+}，其中��
+�,�表示切片�中用户u 的状态集合，该集合包括
+用户的队列长度��
+�,�、到达流量��
+�,�、SINR 指标������
+�,�、实际交付的流量��
+�,�、时
+间裕度。为了解决用户数量变化带来的状态空间维度变化问题，本节的状态空间
+同样需要经过DeepSets 处理得到带全局上下文的用户表征。
+动作空间：
+集合��
+(�) = {��
+�,1, . . . , ��
+�,��
+(�)
+}，其中��
+�,�表示为用户u 分配的PRB 数量。
+奖励函数：
+�=
+�
+���
+�,�
+��
+෍
+−�
+�
+��
+�,�
+��
+෍
++ �
+���
+�,�
+σ
+��
+(�)
+（4）
+其中��用户队列长度阈值，�、�、�均为权重项，该奖励函数旨在保证用户
+需求得到满足的同时最大化资源利用率。本节拟采用PPO 算法根据上述状态空
+间与奖励函数对动作空间进行求解，并通过仿真验证该策略的效果
+3.4 主要仪器设备
+i5-10400F CPU、NVIDIA GeForce GT 730 显卡、16.00G 内存戴尔台式电脑
+
+（四）预期结果与创新点
+4.1 预期结果
+本研究预期取得以下成果：
+1）在切片数固定、突发负载与资源紧张场景下，基于LSTM 结合PPO 方法，
+相较于静态优化或常规DRL 方法，显著降低切片SLA 违约率，同时在保证SLA
+的同时减少PRB 的占用，降低资源成本。
+2）在切片数量可变的场景下，基于DeepSets 方法处理变长输入、输出，并
+使用PPO 构建轻量化RAN 资源分配架构，实现对整体SLA 满意度与资源利用
+率提升。
+3）基于DeepSets 与PPO 实现对切片内用户资源的高效调度，最大化资源利
+用率。
+4）拟发表论文1 篇。
+4.2 研究创新点
+本研究的创新点可以总结如下：
+1）本研究深入研究了在资源紧张、流量高突发的场景下基于流量预测算法
+与DRL 算法的RAN 切片资源分配问题，相较于其他方法能更加高效地应对未
+来到达地流量需求，减少资源消耗。
+2）本研究考虑了切片数量可变的场景，使用DeepSet 使用方法解决传统DRL
+算法中状态动作空间维度可变的问题，在此场景下进行切片资源分配更符合现实
+网络特性。
+3）本研究在上述研究的基础上进一步探究了切片内的用户资源调度问题，
+使系统架构更加完整，将大大提升网络资源利用效率，提高用户满意度。
+这些创新点展示了在RAN 网络环境中，通过引入新颖的方法（如LSTM、
+DeepSets），智能地管理和调度资源，从而实现网络性能的最大化、资源利用率
+的提高以及服务质量的保障。这些创新不仅在理论上有显著贡献，也在实际应用
+中具有重要的实践价值。
+
+（五）工作进度安排及经费预算
+本研究论文工作进展安排如表2 所示。
+时间
+主要研究内容
+2025.09~2025.10
+查阅相关资料，了解相关知识，确定研究方向
+2025.10~2025.12
+明确研究题目，以及研究拟使用的方法
+2025.12~2026.03
+完成研究内容一场景及模型与仿真验证
+2026.03~2026.06
+完成论文发表；在研究内容一的基础上，进行研
+究内容二的场景建模等
+2026.06~2026.09
+完善研究内容二的相关内容并进行仿真验证，进
+行研究内容三的场景建模等
+2026.09~2026.12
+对研究内容三得相关内容进行完善并验证其性能
+2027.12~2027.03
+完成所有研究内容，并完成仿真验证
+2027.03~2027.06
+撰写毕业论文，准备毕业答辩
+表2 论文工作进展安排
+本研究预算经费为8000 元，如表3 所示
+支出科目
+金额（元）
+计算根据及理由
+调研费
+1000
+参加会议、差旅费、通信费等
+资料费
+1000
+资料打印、购买资料
+论文版面费
+3000
+论文版面费
+答辩费
+3000
+论文答辩及其他费用
+合计
+8000
+上述费用合计
+表3 经费预算
+
+（六）参考文献
+Alcaraz, JJ, Losilla, F, Zanella, A, Zorzi, M. 2022. Model-based reinforcement
+learning with kernels for resource allocation in RAN slices. IEEE Transactions on
+Wireless Communications 22(1): 486-501.
+Cheng, P, Chen, Y, Ding, M, Chen, Z, Liu, S, Chen, Y-PP. 2023. Deep reinforcement
+learning for online resource allocation in IoT networks: Technology, development,
+and future challenges. IEEE Communications Magazine 61(6): 111-117.
+Chien, H-T, Lin, Y-D, Lai, C-L, Wang, C-T. 2019. End-to-end slicing with optimized
+communication and computing resource allocation in multi-tenant 5G systems. IEEE
+Transactions on Vehicular Technology 69(2): 2079-2091.
+Dong, T, Zhuang, Z, Qi, Q, Wang, J, Sun, H, Yu, FR, Sun, T, Zhou, C, Liao, J. 2021.
+Intelligent joint network slicing and routing via GCN-powered multi-task deep
+reinforcement learning. IEEE Transactions on Cognitive Communications and
+Networking 8(2): 1269-1286.
+Elayoubi, SE, Jemaa, SB, Altman, Z, Galindo-Serrano, A. 2019. 5G RAN slicing for
+verticals: Enablers and challenges. IEEE Communications Magazine 57(1): 28-34.
+Gao, M, Shen, R, Li, J, Yan, S, Li, Y, Shi, J, Han, Z, Zhuo, L. 2020. Computation
+offloading with instantaneous load billing for mobile edge computing. IEEE
+Transactions on Services Computing 15(3): 1473-1485.
+Gao, M, Shen, R, Shi, L, Qi, W, Li, J, Li, Y. 2021. Task partitioning and offloading in
+DNN-task enabled mobile edge computing networks. IEEE Transactions on Mobile
+Computing 22(4): 2435-2445.
+Gharehgoli, A, Nouruzi, A, Mokari, N, Azmi, P, Javan, MR, Jorswieck, EA. 2023.
+AI-based resource allocation in end-to-end network slicing under demand and CSI
+uncertainties. IEEE Transactions on Network and Service Management 20(3):
+3630-3651.
+Hua, Y, Li, R, Zhao, Z, Chen, X, Zhang, H. 2019. GAN-powered deep distributional
+reinforcement learning for resource management in network slicing. IEEE journal on
+selected areas in communications 38(2): 334-349.
+Huang, Q, Kadoch, M. 2020. 5G resource scheduling for low-latency communication:
+A reinforcement learning approach. In 2020 IEEE 92nd Vehicular Technology
+Conference (VTC2020-Fall). IEEE; 1-5.
+Khan, AA, Abolhasan, M, Ni, W, Lipman, J, Jamalipour, A. 2021. An end-to-end
+(E2E) network slicing framework for 5G vehicular ad-hoc networks. IEEE
+Transactions on Vehicular Technology 70(7): 7103-7112.
+Khan, LU, Yaqoob, I, Tran, NH, Han, Z, Hong, CS. 2020. Network slicing: Recent
+advances, taxonomy, requirements, and open research challenges. IEEE Access
+8(36009-36028.
+Khan, T, Tian, W, Ilager, S, Buyya, R. 2022. Workload forecasting and energy state
+estimation in cloud data centres: ML-centric approach. Future Generation Computer
+Systems 128(320-332.
+
+Kumar, J, Singh, AK, Buyya, R. 2021. Self directed learning based workload
+forecasting
+model
+for
+cloud
+resource
+management.
+Information
+Sciences
+543(345-366.
+Li, R, Wang, C, Zhao, Z, Guo, R, Zhang, H. 2020. The LSTM-based advantage
+actor-critic learning for resource management in network slicing with user mobility.
+IEEE Communications Letters 24(9): 2005-2009.
+Liu, Y, Ding, J, Zhang, Z-L, Liu, X. 2021. CLARA: A constrained reinforcement
+learning based resource allocation framework for network slicing. In 2021 IEEE
+International Conference on Big Data (Big Data). IEEE; 1427-1437.
+Luo, C, Ji, J, Wang, Q, Chen, X, Li, P. 2018. Channel state information prediction for
+5G wireless communications: A deep learning approach. IEEE transactions on
+network science and engineering 7(1): 227-236.
+Masoudi, M, Demir, ÖT, Zander, J, Cavdar, C. 2022. Energy-optimal end-to-end
+network
+slicing
+in
+cloud-based
+architecture.
+IEEE
+Open
+Journal
+of
+the
+Communications Society 3(574-592.
+Mei, J, Wang, X, Zheng, K, Boudreau, G, Sediq, AB, Abou-Zeid, H. 2021. Intelligent
+radio access network slicing for service provisioning in 6G: A hierarchical deep
+reinforcement learning approach. IEEE Transactions on Communications 69(9):
+6063-6078.
+Meng, S, Wang, Z, Ding, H, Wu, S, Li, X, Zhao, P, Zhu, C, Wang, X. 2019. RAN slice
+strategy based on deep reinforcement learning for smart grid. In 2019 Computing,
+Communications and IoT Applications (ComComAp). IEEE; 6-11.
+Motalleb, MK, Shah-Mansouri, V, Parsaeefard, S, López, OLA. 2022. Resource
+allocation in an open RAN system using network slicing. IEEE Transactions on
+Network and Service Management 20(1): 471-485.
+Nassar, A, Yilmaz, Y. 2021. Deep reinforcement learning for adaptive network slicing
+in 5G for intelligent vehicular systems and smart cities. IEEE Internet Things J. 9 (1),
+222–235 (2022).
+Sciancalepore, V, Costa-Perez, X, Banchs, A. 2019. RL-NSB: Reinforcement
+learning-based 5G network slice broker. IEEE/ACM transactions on networking 27(4):
+1543-1557.
+Shafi, M, Molisch, AF, Smith, PJ, Haustein, T, Zhu, P, De Silva, P, Tufvesson, F,
+Benjebbour, A, Wunder, G. 2017. 5G: A tutorial overview of standards, trials,
+challenges,
+deployment,
+and
+practice.
+IEEE
+journal
+on
+selected
+areas
+in
+communications 35(6): 1201-1221.
+Subramanya, T, Harutyunyan, D, Riggio, R. 2020. Machine learning-driven service
+function chain placement and scaling in MEC-enabled 5G networks. Computer
+Networks 166(106980.
+Sun, G, Gebrekidan, ZT, Boateng, GO, Ayepah-Mensah, D, Jiang, W. 2019. Dynamic
+reservation and deep reinforcement learning based autonomous resource slicing for
+virtualized radio access networks. Ieee Access 7(45758-45772.
+Wang, H, Wu, Y, Min, G, Xu, J, Tang, P. 2019. Data-driven dynamic resource
+scheduling for network slicing: A deep reinforcement learning approach. Information
+Sciences 498(106-116.
+
+Wijethilaka, S, Liyanage, M. 2021. Survey on network slicing for Internet of Things
+realization in 5G networks. IEEE Communications Surveys & Tutorials 23(2):
+957-994.
+Xi, R, Chen, X, Chen, Y, Li, Z. 2019. Real-time resource slicing for 5G RAN via deep
+reinforcement learning. In 2019 IEEE 25th International Conference on Parallel and
+Distributed Systems (ICPADS). IEEE; 625-632.
+Zangooei, M, Golkarifard, M, Rouili, M, Saha, N, Boutaba, R. 2023. Flexible RAN
+slicing in open RAN with constrained multi-agent reinforcement learning. IEEE
+Journal on Selected Areas in Communications 42(2): 280-294.
+Zhang, H, Pan, G, Xu, S, Zhang, S, Jiang, Z. 2022. A hard and soft hybrid slicing
+framework for service level agreement guarantee via deep reinforcement learning. In
+2022 IEEE 95th Vehicular Technology Conference:(VTC2022-Spring). IEEE; 1-5.
